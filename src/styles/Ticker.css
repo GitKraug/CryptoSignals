@@ -1,0 +1,22 @@
+.TickerContainer {
+	width: 20%;
+ 	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	justify-content: center;
+  	background: #146d2c;
+  	margin: 2%;
+  	border-radius: 10px;
+  	min-width: 200px;
+  	min-height: 250px;
+  }
+
+  .TickerHeading {
+  	font-family: "Arial";
+	font-size: 1.4em;
+	color: white;
+	text-align: center;
+  	margin: 10px;
+  	width: 100%;
+  	font-weight: bold;
+  }
