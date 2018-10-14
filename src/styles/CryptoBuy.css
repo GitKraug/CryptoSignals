@@ -22,9 +22,14 @@
 .FilterChosen {
 	margin: 2% auto;
 	font-family: "Arial";
-    font-size: 1.2em;
+    font-size: 2em;
     text-align: center;
     font-weight: bold;
-    color: brown;
-    margin: 2px;
+    color: #006666;
+    margin: 2% 0% 5% 0%;
+}
+
+.SelectContainer {
+	width: 50%;
+	margin: 2% auto;
 }

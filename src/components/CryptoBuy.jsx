@@ -15,11 +15,11 @@ const convertCoins = {
 const removeCoins = ['VENBTC']
 
 const options = [
-  { value: 'priceChange24Hr', label: 'Endring i pris siste 24 timer' },
+  { value: 'priceChange24Hr', label: 'Største prisendring siste 24 timer' },
   { value: 'mostGains', label: 'Største prisøkning' },
   { value: 'vanilla', label: 'Største verditap' },
   { value: 'best_RSI', label: 'Laveste RSI (Relative Strength Index)' }
-];
+]
 
 export default class CryptoBuy extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class CryptoBuy extends React.Component {
     this.state = {
       all_binance_coins_data: [],
       cmc_data: this.getLogos(),
-      filter: ''
+      filter: 'Velg filter'
     };
   }
 
@@ -40,7 +40,7 @@ export default class CryptoBuy extends React.Component {
   }
 
   filterCoins(coins) {
-    return coins.filter(a => a.symbol.includes("BTC"))//.filter(a => parseInt(a.priceChangePercent)>=18)
+    return coins.filter(a => a.symbol.includes("BTC"))
   }
 
   filterOnVol(coins) {
@@ -92,8 +92,8 @@ export default class CryptoBuy extends React.Component {
       <div className="CryptoBuyContainer">
         <div className="FilterContainer">
           <div className="SelectContainer">
-            <p className="FilterChosen"> { this.state.filter !== '' ? this.state.filter : 'Velg filter' }</p>
-            <Select value={'filter'} onChange={this.handleChange} options={options} />
+            <p className="FilterChosen">Søkekriterier</p>
+            <Select onChange={this.handleChange} options={options} placeholder={this.state.filter} />
           </div>
         </div>
         { tickers }
