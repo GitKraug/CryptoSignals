@@ -18,3 +18,13 @@
   	min-height: 150px;
   	border-radius: 10px;
 }
+
+.FilterChosen {
+	margin: 2% auto;
+	font-family: "Arial";
+    font-size: 1.2em;
+    text-align: center;
+    font-weight: bold;
+    color: brown;
+    margin: 2px;
+}

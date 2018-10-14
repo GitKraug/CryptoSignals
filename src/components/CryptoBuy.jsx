@@ -2,6 +2,7 @@ import React from 'react';
 import './../styles/CryptoBuy.css';
 import axios from 'axios';
 import Ticker from './Ticker';
+import Select from 'react-select';
 
 const convertCoins = {
   'BQXBTC': 'ETHOS',
@@ -13,17 +14,33 @@ const convertCoins = {
 
 const removeCoins = ['VENBTC']
 
+const options = [
+  { value: 'priceChange24Hr', label: 'Endring i pris siste 24 timer' },
+  { value: 'mostGains', label: 'Største prisøkning' },
+  { value: 'vanilla', label: 'Største verditap' },
+  { value: 'best_RSI', label: 'Laveste RSI (Relative Strength Index)' }
+];
+
 export default class CryptoBuy extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       all_binance_coins_data: [],
-      cmc_data: this.getLogos()
+      cmc_data: this.getLogos(),
+      filter: ''
     };
   }
 
+  handleChange = (selectedOption) => {
+    this.setState({
+      all_binance_coins_data: this.state.all_binance_coins_data,
+      cmc_data: this.state.cmc_data,
+      filter: selectedOption.label
+    })
+  }
+
   filterCoins(coins) {
-    return coins.filter(a => a.symbol.includes("BTC")).filter(a => parseInt(a.priceChangePercent)>=18)
+    return coins.filter(a => a.symbol.includes("BTC"))//.filter(a => parseInt(a.priceChangePercent)>=18)
   }
 
   filterOnVol(coins) {
@@ -42,7 +59,8 @@ export default class CryptoBuy extends React.Component {
             symbol: c.symbol, 
             logo: this.getLogoUrl(c.id)
           }
-        })
+        }),
+        filter: this.state.filter
       })
     })
   }
@@ -73,7 +91,10 @@ export default class CryptoBuy extends React.Component {
     return (
       <div className="CryptoBuyContainer">
         <div className="FilterContainer">
-
+          <div className="SelectContainer">
+            <p className="FilterChosen"> { this.state.filter !== '' ? this.state.filter : 'Velg filter' }</p>
+            <Select value={'filter'} onChange={this.handleChange} options={options} />
+          </div>
         </div>
         { tickers }
       </div>
