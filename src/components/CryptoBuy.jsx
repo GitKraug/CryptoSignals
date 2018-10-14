@@ -23,7 +23,7 @@ export default class CryptoBuy extends React.Component {
   }
 
   filterCoins(coins) {
-    return coins.filter(a => a.symbol.includes("BTC"))//.filter(a => parseInt(a.priceChangePercent)>=18)
+    return coins.filter(a => a.symbol.includes("BTC")).filter(a => parseInt(a.priceChangePercent)>=18)
   }
 
   filterOnVol(coins) {
@@ -50,7 +50,7 @@ export default class CryptoBuy extends React.Component {
   getLogoUrlFromTicker(logos, ticker) {
     var shortTicker = convertCoins[ticker] !== undefined ? convertCoins[ticker] : ticker.substr(0, ticker.indexOf('BTC'))
     var logoObj = logos.filter(a => a.symbol === shortTicker)
-    return logoObj.length>0 ? logoObj[0].logo : null
+    return logoObj.length > 0 ? logoObj[0].logo : null
   }
 
   getLogoUrl(id) {
@@ -72,6 +72,9 @@ export default class CryptoBuy extends React.Component {
    
     return (
       <div className="CryptoBuyContainer">
+        <div className="FilterContainer">
+
+        </div>
         { tickers }
       </div>
     )
