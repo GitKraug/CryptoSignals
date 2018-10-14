@@ -1,6 +1,6 @@
 .TickerContainer {
-	width: 20%;
- 	display: flex;
+	  width: 20%;
+ 	  display: flex;
   	flex-direction: column;
   	align-items: center;
   	justify-content: center;
@@ -13,10 +13,31 @@
 
   .TickerHeading {
   	font-family: "Arial";
-	font-size: 1.4em;
-	color: white;
-	text-align: center;
+	  font-size: 1.4em;
+	  color: white;
+    text-align: center;
   	margin: 10px;
   	width: 100%;
   	font-weight: bold;
+    margin-bottom: 10%;
+  }
+
+  .TickerStats {
+    font-family: "Arial";
+    font-size: 1.2em;
+    text-align: center;
+    margin: 2px;
+    width: 100%;
+  }
+
+  .TickerContent {
+    width: 80%;
+    background: #e2f2de;
+    border-radius: 10px;
+    min-height: 150px;
+    margin: 10%;
+  }
+
+  .TickerLogo {
+    margin: 10% 0% 0% 0%;
   }
