@@ -1,0 +1,23 @@
+.NavbarContainer {
+	width: 100%;
+	background: #4a3a84;
+	min-height: 50px;
+	display:flex;
+	flex-direction: row;
+  	align-items: center;
+  	justify-content: flex-start;
+  	top: 0;
+  	position: fixed;
+  	z-index: 999;
+}
+
+.NavbarItem {
+	font-family: "Arial";
+  	font-size: 1.4em;
+  	color: white;
+  	margin: 10px;
+  	width: 10%;
+  	font-weight: bold;
+  	text-align: center;
+  	cursor: pointer;
+}

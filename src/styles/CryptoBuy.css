@@ -7,14 +7,11 @@
   	justify-content: center;
 }
 
-.FilterContainer {
-	width: 80%;
-	flex-direction: row;
+.CryptoBuyContainerColumn {
+	width: 100%;
+	display: flex;
+  	flex-direction: column;
   	flex-wrap: wrap;
   	align-items: center;
   	justify-content: center;
-  	background: white;
-  	margin: 5%;
-  	min-height: 150px;
-  	border-radius: 10px;
 }
