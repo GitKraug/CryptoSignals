@@ -6,26 +6,28 @@ import Navbar from './Navbar'
 export default class TwitterFeed extends React.Component {
 	constructor(props) {
 		super(props);
-	    this.state = {};
+	    this.state = {
+	    	tweets: []
+	    };
 	}
 
   render() {
     return (
 		<div className="TwitterFeedContainer">
 			<Navbar />
-			<Timeline
-			    dataSource={{
+			<Timeline 
+				dataSource={{
 			      sourceType: 'profile',
-			      screenName: ['BitQueenBR', 'urban_ta']
+			      screenName: 'BitQueenBR'
 			    }}
 			    options={{
-			      username: 'BitQueenBR', 
+			      username: 'urban_ta', 
 			      width: '1000'
-			    }}
-			    onLoad={() => console.log('Timeline is loaded!')} />
+			    }} 
+		    onLoad={() => console.log('Timeline is loaded!')} />
+
 		</div>
 	)
   }
 }
-
 
