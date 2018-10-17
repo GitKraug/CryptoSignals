@@ -7,9 +7,11 @@ export default class Ticker extends React.Component {
   		color: parseFloat(this.props.priceChangePercent) > 0 ? 'green' : 'red'
   	}
 
+  	console.log(JSON.stringify(this.props.cmcData))
+
     return (
 		<div className="TickerContainer">
-			<img className="TickerLogo" src={this.props.cmcData.logoUrl} alt='' /> 
+			<img className="TickerLogo" src={this.props.cmcData.logo} alt='' /> 
 			<p className="TickerHeading"> { this.props.ticker  } </p>
 			<p className="SmallerTickerHeading"> ({this.props.cmcData.name}) </p>
 			

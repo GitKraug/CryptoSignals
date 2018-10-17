@@ -76,7 +76,7 @@ export default class CryptoBuy extends React.Component {
     })
   }
 
-  getLogoUrlFromTicker(logos, ticker) {
+  getCmcDataFromTicker(logos, ticker) {
     var shortTicker = convertCoins[ticker] !== undefined ? convertCoins[ticker] : ticker.substr(0, ticker.indexOf('BTC'))
     var logoObj = logos.filter(a => a.symbol === shortTicker)
     return logoObj.length > 0 ? logoObj[0] : null
@@ -99,7 +99,7 @@ export default class CryptoBuy extends React.Component {
   render() {
     var tickers = this.getFilteredList()
       .filter(coin => !(removeCoins.indexOf(coin.symbol) !== -1))
-      .map(t => <Ticker ticker={t.symbol} priceChangePercent={t.priceChangePercent} cmcData={ this.getLogoUrlFromTicker(this.state.cmc_data, t.symbol) } />) 
+      .map(t => <Ticker ticker={t.symbol} priceChangePercent={t.priceChangePercent} cmcData={ this.getCmcDataFromTicker(this.state.cmc_data, t.symbol) } />) 
    
     return (
       <div className="CryptoBuyContainerColumn">
