@@ -6,7 +6,7 @@ import CryptoBuy from './components/CryptoBuy';
 import TwitterFeed from './components/TwitterFeed';
 
 ReactDOM.render(
-	<TwitterFeed />,
+	<CryptoBuy />,
 	document.getElementById('root')
 );
 

@@ -9,8 +9,9 @@ export default class Ticker extends React.Component {
 
     return (
 		<div className="TickerContainer">
-			<img className="TickerLogo" src={this.props.logoUrl} alt='' /> 
+			<img className="TickerLogo" src={this.props.cmcData.logoUrl} alt='' /> 
 			<p className="TickerHeading"> { this.props.ticker  } </p>
+			<p className="SmallerTickerHeading"> ({this.props.cmcData.name}) </p>
 			
 			<div className="TickerContent">
 				<p className="TickerStats" style={changePercentStyle}>24hr: { this.props.priceChangePercent }%</p>
