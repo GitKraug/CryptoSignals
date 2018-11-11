@@ -59,14 +59,14 @@ export default class CryptoBuy extends React.Component {
 
   getLogos() {
     var listingsUrl = 'https://api.coinmarketcap.com/v2/listings/'
-    
+
     axios.get(listingsUrl).then(response => {
       this.setState({
         all_binance_coins_data: this.state.all_binance_coins_data,
         cmc_data: response.data.data.map(c => {
           return {
-            id: c.id, 
-            symbol: c.symbol, 
+            id: c.id,
+            symbol: c.symbol,
             logo: this.getLogoUrl(c.id)
           }
         }),
@@ -98,11 +98,10 @@ export default class CryptoBuy extends React.Component {
   render() {
     var tickers = this.getFilteredList()
       .filter(coin => !(removeCoins.indexOf(coin.symbol) !== -1))
-      .map(t => <Ticker ticker={t.symbol} priceChangePercent={t.priceChangePercent} logoUrl={ this.getLogoUrlFromTicker(this.state.cmc_data, t.symbol) } />) 
-   
+      .map(t => <Ticker ticker={t.symbol} priceChangePercent={t.priceChangePercent} logoUrl={ this.getLogoUrlFromTicker(this.state.cmc_data, t.symbol) } />)
+
     return (
       <div className="CryptoBuyContainerColumn">
-        <Navbar />
         <div className="CryptoBuyContainer">
           <Filter handleChange={(option) => this.handleChange(option)} placeholder={this.state.filter} />
           { tickers }

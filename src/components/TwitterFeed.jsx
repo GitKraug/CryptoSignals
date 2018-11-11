@@ -14,40 +14,16 @@ export default class TwitterFeed extends React.Component {
   render() {
     return (
 		<div className="TwitterFeedContainer">
-			<Navbar />
-			
-			<Timeline 
+			<Timeline
 				dataSource={{
 			      sourceType: 'profile',
-			      screenName: 'BitQueenBR'
+			      screenName: this.props.profile
 			    }}
 			    options={{
-			      username: 'BitQueenBR', 
+			      username: this.props.profile,
 			      width: '1000'
 			    }} />
-		    
-		    <Timeline 
-				dataSource={{
-			      sourceType: 'profile',
-			      screenName: 'urban_ta'
-			    }}
-			    options={{
-			      username: 'urban_ta', 
-			      width: '1000'
-			    }} />
-
-		     <Timeline 
-				dataSource={{
-			      sourceType: 'profile',
-			      screenName: 'teddycleps'
-			    }}
-			    options={{
-			      username: 'teddycleps', 
-			      width: '1000'
-			    }} />
-
 		</div>
 	)
   }
 }
-

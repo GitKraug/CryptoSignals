@@ -20,4 +20,7 @@ export const options = [
   { value: best_RSI, label: 'Laveste RSI (Relative Strength Index)' }
 ]
 
-
+export const HOME = 'home'
+export const BITQUEEN = 'bitqueen'
+export const CRYPTOFREAK = 'cryptofreak'
+export const URBANTA = 'urbanta'

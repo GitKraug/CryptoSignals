@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import CryptoBuy from './components/CryptoBuy';
-import TwitterFeed from './components/TwitterFeed';
+import Navigation from './components/Navigation';
 
 ReactDOM.render(
-	<TwitterFeed />,
+	<Navigation />,
 	document.getElementById('root')
 );
 
