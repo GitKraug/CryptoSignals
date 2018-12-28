@@ -2,7 +2,7 @@ import React from 'react';
 import './../styles/CryptoBuy.css';
 import axios from 'axios';
 import Ticker from './Ticker';
-import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains} from './../constants/constants.jsx';
+import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains, tradeCount} from './../constants/constants.jsx';
 import Filter from './Filter.jsx';
 
 export default class CryptoBuy extends React.Component {
@@ -30,11 +30,18 @@ export default class CryptoBuy extends React.Component {
     return toBeSorted.sort((a, b) => Math.abs(parseFloat(a.priceChangePercent)) - Math.abs(parseFloat(b.priceChangePercent))).reverse()
   }
 
+  filterOnTradeCount() {
+    var toBeSorted = this.state.all_binance_coins_data
+    toBeSorted.sort((a, b) => Math.abs(parseFloat(a.count)) - Math.abs(parseFloat(b.count))).reverse()
+    return toBeSorted
+  }
+
   getFilteredList() {
     var mapping = {
       mostGains: this.state.filter === mostGains ? this.filterOnGainsAscending() : this.state.all_binance_coins_data,
       lessGains: this.state.filter === lessGains ? this.filterOnGainsDescending() : this.state.all_binance_coins_data,
       priceChange24Hr: this.state.filter === priceChange24Hr ? this.filterOnMostChangeDescending() : this.state.all_binance_coins_data,
+      tradeCount: this.state.filter === tradeCount ? this.filterOnTradeCount() : this.state.all_binance_coins_data
     }
 
     return this.state.filter !== 'Velg filter' && this.state.all_binance_coins_data.length > 0 && mapping[this.state.filter] !== undefined ? mapping[this.state.filter] : this.state.all_binance_coins_data
@@ -50,10 +57,6 @@ export default class CryptoBuy extends React.Component {
 
   filterCoins(coins) {
     return coins.filter(a => a.symbol.includes("BTC"))
-  }
-
-  filterOnVol(coins) {
-    return coins.filter(coin => parseInt(coin.quoteVolume, 0) >= 100)
   }
 
   getLogos() {
@@ -86,9 +89,12 @@ export default class CryptoBuy extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('https://api.binance.com/api/v1/ticker/24hr').then(response => {
+    var binance_request_url = 'https://api.binance.com/api/v1/ticker/24hr'
+    var cors_proxy_request = 'https://cors-anywhere.herokuapp.com/' + binance_request_url
+
+    axios.get(cors_proxy_request).then(response => {
       this.setState({
-        all_binance_coins_data: this.filterCoins(this.filterOnVol(response.data)),
+        all_binance_coins_data: this.filterCoins(response.data),
         cmc_data: this.state.cmc_data,
         filter: 'Velg filter'
       })
