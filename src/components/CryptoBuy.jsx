@@ -2,9 +2,8 @@ import React from 'react';
 import './../styles/CryptoBuy.css';
 import axios from 'axios';
 import Ticker from './Ticker';
-import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains, best_RSI} from './../constants/constants.jsx';
+import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains} from './../constants/constants.jsx';
 import Filter from './Filter.jsx';
-import Navbar from './Navbar.jsx';
 
 export default class CryptoBuy extends React.Component {
   constructor(props) {
@@ -54,7 +53,7 @@ export default class CryptoBuy extends React.Component {
   }
 
   filterOnVol(coins) {
-    return coins.filter(coin => parseInt(coin.quoteVolume) >= 100)
+    return coins.filter(coin => parseInt(coin.quoteVolume, 0) >= 100)
   }
 
   getLogos() {
@@ -78,7 +77,7 @@ export default class CryptoBuy extends React.Component {
   getLogoUrlFromTicker(logos, ticker) {
     var shortTicker = convertCoins[ticker] !== undefined ? convertCoins[ticker] : ticker.substr(0, ticker.indexOf('BTC'))
     var logoObj = logos !== null ? logos.filter(a => a.symbol === shortTicker) : null
-    
+
     return logoObj.length > 0 ? logoObj[0].logo : null
   }
 
@@ -99,7 +98,7 @@ export default class CryptoBuy extends React.Component {
   render() {
     var tickers = this.getFilteredList()
       .filter(coin => !(removeCoins.indexOf(coin.symbol) !== -1))
-      .map(t => <Ticker ticker={t.symbol} priceChangePercent={t.priceChangePercent} logoUrl={ this.getLogoUrlFromTicker(this.state.cmc_data, t.symbol) } />)
+      .map(t => <Ticker ticker={t.symbol} priceChangePercent={t.priceChangePercent} logoUrl={ this.getLogoUrlFromTicker(this.state.cmc_data, t.symbol) } key={t.symbol} />)
 
     return (
       <div className="CryptoBuyContainerColumn">

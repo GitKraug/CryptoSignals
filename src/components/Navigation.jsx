@@ -1,7 +1,7 @@
 import React from 'react';
 import CryptoBuy from './CryptoBuy.jsx';
 import TwitterFeed from './TwitterFeed.jsx';
-import {HOME, BITQUEEN, CRYPTOFREAK, URBANTA} from './../constants/constants.jsx';
+import {HOME} from './../constants/constants.jsx';
 import Navbar from './Navbar.jsx';
 
 export default class Navigation extends React.Component {

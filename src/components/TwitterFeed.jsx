@@ -1,7 +1,6 @@
 import React from 'react';
 import './../styles/TwitterFeed.css';
 import { Timeline } from 'react-twitter-widgets'
-import Navbar from './Navbar'
 
 export default class TwitterFeed extends React.Component {
 	constructor(props) {
