@@ -11,8 +11,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _emotion = require('emotion');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var css = exports.css = function css(_ref) {
@@ -40,12 +38,13 @@ var SingleValue = function SingleValue(props) {
       cx = props.cx,
       getStyles = props.getStyles,
       isDisabled = props.isDisabled,
-      innerProps = props.innerProps;
+      innerProps = props.innerProps,
+      emotion = props.emotion;
 
   return _react2.default.createElement(
     'div',
     _extends({
-      className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('singleValue', props)), {
+      className: cx(emotion.css(getStyles('singleValue', props)), {
         'single-value': true,
         'single-value--is-disabled': isDisabled
       }, className)

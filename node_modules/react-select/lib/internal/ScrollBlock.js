@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _emotion = require('emotion');
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -68,7 +66,8 @@ var ScrollBlock = function (_PureComponent) {
     value: function render() {
       var _props = this.props,
           children = _props.children,
-          isEnabled = _props.isEnabled;
+          isEnabled = _props.isEnabled,
+          emotion = _props.emotion;
       var touchScrollTarget = this.state.touchScrollTarget;
 
       // bail early if not enabled
@@ -92,7 +91,7 @@ var ScrollBlock = function (_PureComponent) {
         null,
         _react2.default.createElement('div', {
           onClick: this.blurSelectInput,
-          className: (0, _emotion.css)({ position: 'fixed', left: 0, bottom: 0, right: 0, top: 0 })
+          className: emotion.css({ position: 'fixed', left: 0, bottom: 0, right: 0, top: 0 })
         }),
         _react2.default.createElement(
           _NodeResolver2.default,

@@ -13,8 +13,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _emotion = require('emotion');
-
 var _indicators = require('./indicators');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -103,22 +101,19 @@ var MultiValueRemove = exports.MultiValueRemove = function (_Component) {
     value: function render() {
       var _props = this.props,
           children = _props.children,
-          innerProps = _props.innerProps;
+          innerProps = _props.innerProps,
+          emotion = _props.emotion;
 
       return _react2.default.createElement(
         'div',
         innerProps,
-        children
+        children || _react2.default.createElement(_indicators.CrossIcon, { size: 14, emotion: emotion })
       );
     }
   }]);
 
   return MultiValueRemove;
 }(_react.Component);
-
-MultiValueRemove.defaultProps = {
-  children: _react2.default.createElement(_indicators.CrossIcon, { size: 14 })
-};
 
 var MultiValue = function (_Component2) {
   _inherits(MultiValue, _Component2);
@@ -142,27 +137,28 @@ var MultiValue = function (_Component2) {
           innerProps = _props2.innerProps,
           isDisabled = _props2.isDisabled,
           removeProps = _props2.removeProps,
-          selectProps = _props2.selectProps;
+          selectProps = _props2.selectProps,
+          emotion = _props2.emotion;
       var Container = components.Container,
           Label = components.Label,
           Remove = components.Remove;
 
 
       var containerInnerProps = _extends({
-        className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('multiValue', this.props)), {
+        className: cx(emotion.css(getStyles('multiValue', this.props)), {
           'multi-value': true,
           'multi-value--is-disabled': isDisabled
         }, className)
       }, innerProps);
 
       var labelInnerProps = {
-        className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('multiValueLabel', this.props)), {
+        className: cx(emotion.css(getStyles('multiValueLabel', this.props)), {
           'multi-value__label': true
         }, className)
       };
 
       var removeInnerProps = _extends({
-        className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('multiValueRemove', this.props)), {
+        className: cx(emotion.css(getStyles('multiValueRemove', this.props)), {
           'multi-value__remove': true
         }, className)
       }, removeProps);
@@ -186,7 +182,8 @@ var MultiValue = function (_Component2) {
         _react2.default.createElement(Remove, {
           data: data,
           innerProps: removeInnerProps,
-          selectProps: selectProps
+          selectProps: selectProps,
+          emotion: emotion
         })
       );
     }

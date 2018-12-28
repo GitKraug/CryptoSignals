@@ -11,8 +11,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _emotion = require('emotion');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var placeholderCSS = exports.placeholderCSS = function placeholderCSS(_ref) {
@@ -34,12 +32,13 @@ var Placeholder = function Placeholder(props) {
       className = props.className,
       cx = props.cx,
       getStyles = props.getStyles,
-      innerProps = props.innerProps;
+      innerProps = props.innerProps,
+      emotion = props.emotion;
 
   return _react2.default.createElement(
     'div',
     _extends({
-      className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('placeholder', props)), {
+      className: cx(emotion.css(getStyles('placeholder', props)), {
         'placeholder': true
       }, className)
     }, innerProps),

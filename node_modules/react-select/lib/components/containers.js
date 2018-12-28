@@ -13,8 +13,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _emotion = require('emotion');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43,12 +41,13 @@ var SelectContainer = exports.SelectContainer = function SelectContainer(props) 
       getStyles = props.getStyles,
       innerProps = props.innerProps,
       isDisabled = props.isDisabled,
-      isRtl = props.isRtl;
+      isRtl = props.isRtl,
+      emotion = props.emotion;
 
   return _react2.default.createElement(
     'div',
     _extends({
-      className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('container', props)), {
+      className: cx(emotion.css(getStyles('container', props)), {
         '--is-disabled': isDisabled,
         '--is-rtl': isRtl
       }, className)
@@ -93,13 +92,14 @@ var ValueContainer = exports.ValueContainer = function (_Component) {
           cx = _props.cx,
           isMulti = _props.isMulti,
           getStyles = _props.getStyles,
-          hasValue = _props.hasValue;
+          hasValue = _props.hasValue,
+          emotion = _props.emotion;
 
 
       return _react2.default.createElement(
         'div',
         {
-          className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('valueContainer', this.props)), {
+          className: cx(emotion.css(getStyles('valueContainer', this.props)), {
             'value-container': true,
             'value-container--is-multi': isMulti,
             'value-container--has-value': hasValue
@@ -129,13 +129,14 @@ var IndicatorsContainer = exports.IndicatorsContainer = function IndicatorsConta
   var children = props.children,
       className = props.className,
       cx = props.cx,
-      getStyles = props.getStyles;
+      getStyles = props.getStyles,
+      emotion = props.emotion;
 
 
   return _react2.default.createElement(
     'div',
     {
-      className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('indicatorsContainer', props)), {
+      className: cx(emotion.css(getStyles('indicatorsContainer', props)), {
         'indicators': true
       }, className)
     },
