@@ -79,7 +79,7 @@ export default class CryptoBuy extends React.Component {
 
   getLogoUrlFromTicker(logos, ticker) {
     var shortTicker = convertCoins[ticker] !== undefined ? convertCoins[ticker] : ticker.substr(0, ticker.indexOf('BTC'))
-    var logoObj = logos !== null ? logos.filter(a => a.symbol === shortTicker) : null
+    var logoObj = logos !== undefined ? logos.filter(a => a.symbol === shortTicker) : null
 
     return logoObj.length > 0 ? logoObj[0].logo : null
   }

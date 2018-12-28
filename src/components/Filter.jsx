@@ -4,13 +4,6 @@ import Select from 'react-select';
 import {options} from './../constants/constants.jsx';
 
 export default class Filter extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-  }
-
   render() {
     return (
       <div className="FilterContainer">

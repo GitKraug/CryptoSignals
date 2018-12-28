@@ -1,6 +1,6 @@
 import React from 'react';
 import './../styles/Navbar.css';
-import {HOME, BITQUEEN, CRYPTOFREAK, URBANTA} from './../constants/constants.jsx';
+import {HOME, BITQUEEN, CRYPTOFREAK, URBANTA, NEWS} from './../constants/constants.jsx';
 
 export default class Navbar extends React.Component {
   constructor(props) {
@@ -19,6 +19,7 @@ export default class Navbar extends React.Component {
         <p className="NavbarItem" onClick={(view) => this.handleClick(BITQUEEN)} >BitqueenBR</p>
         <p className="NavbarItem" onClick={(view) => this.handleClick(URBANTA)} >UrbanTA</p>
         <p className="NavbarItem" onClick={(view) => this.handleClick(CRYPTOFREAK)} >CrypoFreak</p>
+        <p className="NavbarItem" onClick={(view) => this.handleClick(NEWS)} >News</p>
       </div>
     )
   }
