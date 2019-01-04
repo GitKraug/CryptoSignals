@@ -4,6 +4,7 @@ import axios from 'axios';
 import Ticker from './Ticker';
 import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains, tradeCount} from './../constants/constants.jsx';
 import Filter from './Filter.jsx';
+import {CORS_PROXY_URL, BINANCE_TICKERS_24H_URL, CMC_LOGO_URL, CMC_LISTINGS_URL} from './../constants/url.jsx';
 
 export default class CryptoBuy extends React.Component {
   constructor(props) {
@@ -60,9 +61,7 @@ export default class CryptoBuy extends React.Component {
   }
 
   getLogos() {
-    var listingsUrl = 'https://api.coinmarketcap.com/v2/listings/'
-
-    axios.get(listingsUrl).then(response => {
+    axios.get(CMC_LISTINGS_URL).then(response => {
       this.setState({
         all_binance_coins_data: this.state.all_binance_coins_data,
         cmc_data: response.data.data.map(c => {
@@ -74,7 +73,7 @@ export default class CryptoBuy extends React.Component {
         }),
         filter: this.state.filter
       })
-    })
+    }).catch(error => { console.log("Feil ved henting av CMC-listings") })
   }
 
   getLogoUrlFromTicker(logos, ticker) {
@@ -85,26 +84,24 @@ export default class CryptoBuy extends React.Component {
   }
 
   getLogoUrl(id) {
-    return 'https://s2.coinmarketcap.com/static/img/coins/32x32/' + id + '.png'
+    return CMC_LOGO_URL + id + '.png'
   }
 
   componentDidMount() {
-    var binance_request_url = 'https://api.binance.com/api/v1/ticker/24hr'
-    var cors_proxy_request = 'https://cors-anywhere.herokuapp.com/' + binance_request_url
-
-    axios.get(cors_proxy_request).then(response => {
+    axios.get(CORS_PROXY_URL + BINANCE_TICKERS_24H_URL).then(response => {
       this.setState({
         all_binance_coins_data: this.filterCoins(response.data),
         cmc_data: this.state.cmc_data,
         filter: 'Velg filter'
       })
-    })
+    }).catch(error => { console.log("Feil ved henting av Binance-ticker") })
   }
 
   render() {
     var tickers = this.getFilteredList()
       .filter(coin => !(removeCoins.indexOf(coin.symbol) !== -1))
       .map(t => <Ticker ticker={t.symbol} priceChangePercent={t.priceChangePercent} logoUrl={ this.getLogoUrlFromTicker(this.state.cmc_data, t.symbol) } key={t.symbol} />)
+      .filter(nullfailsafe => nullfailsafe.props.logoUrl !== null)
 
     return (
       <div className="CryptoBuyContainerColumn">
