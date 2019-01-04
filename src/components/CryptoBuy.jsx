@@ -47,7 +47,7 @@ export default class CryptoBuy extends React.Component {
     return this.state.filter !== 'Velg filter' && this.state.all_binance_coins_data.length > 0 && mapping[this.state.filter] !== undefined ? mapping[this.state.filter] : this.state.all_binance_coins_data
   }
 
-  handleChange = (selectedOption) => {
+  handleChange(selectedOption) {
     this.setState({
       all_binance_coins_data: this.state.all_binance_coins_data,
       cmc_data: this.state.cmc_data,
