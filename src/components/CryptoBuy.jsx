@@ -4,7 +4,7 @@ import axios from 'axios';
 import Ticker from './Ticker';
 import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains, tradeCount} from './../constants/constants.jsx';
 import Filter from './Filter.jsx';
-import {CORS_PROXY_URL, BINANCE_TICKERS_24H_URL, CMC_LOGO_URL, CMC_LISTINGS_URL} from './../constants/url.jsx';
+import {CORS_PROXY_URL, BINANCE_TICKERS_24H_URL, CMC_LOGO_URL, CMC_LISTINGS_URL, KRAUG_CRYPTO_API, CURRENT_RSI} from './../constants/url.jsx';
 
 export default class CryptoBuy extends React.Component {
   constructor(props) {
@@ -12,7 +12,8 @@ export default class CryptoBuy extends React.Component {
     this.state = {
       all_binance_coins_data: [],
       cmc_data: this.getLogos(),
-      filter: 'Velg filter'
+      filter: 'Velg filter',
+      rsi_data: []
     };
   }
 
@@ -52,7 +53,8 @@ export default class CryptoBuy extends React.Component {
     this.setState({
       all_binance_coins_data: this.state.all_binance_coins_data,
       cmc_data: this.state.cmc_data,
-      filter: selectedOption.value
+      filter: selectedOption.value,
+      rsi_data: this.state.rsi_data
     })
   }
 
@@ -71,7 +73,8 @@ export default class CryptoBuy extends React.Component {
             logo: this.getLogoUrl(c.id)
           }
         }),
-        filter: this.state.filter
+        filter: this.state.filter,
+        rsi_data: this.state.rsi_data
       })
     }).catch(error => { console.log("Feil ved henting av CMC-listings") })
   }
@@ -88,13 +91,45 @@ export default class CryptoBuy extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(CORS_PROXY_URL + BINANCE_TICKERS_24H_URL).then(response => {
-      this.setState({
+    this.getData()
+  }
+
+  async getData() {
+    var externalData = {}
+
+    await axios.get(CORS_PROXY_URL + BINANCE_TICKERS_24H_URL).then(response => {
+      externalData = {
         all_binance_coins_data: this.filterCoins(response.data),
         cmc_data: this.state.cmc_data,
-        filter: 'Velg filter'
-      })
-    }).catch(error => { console.log("Feil ved henting av Binance-ticker") })
+        filter: 'Velg filter',
+        rsi_data: []
+      }
+    }).catch(error => { console.log("Feil ved henting av Binance-tickers") })
+
+    var symbols = externalData.all_binance_coins_data.map(binance_data => binance_data.symbol)
+    var rsi_axios_calls = []
+    var rsi = []
+    var unsuccessful_data = []
+
+    symbols.map(s => {
+      var uri = KRAUG_CRYPTO_API + CURRENT_RSI + '?symbol=' + s + '&interval=1d'
+
+      rsi_axios_calls.push(axios(uri).then(response => {
+        rsi.push({symbol: s, rsi: response.data.currentRsi})
+      }).catch(e => {
+        unsuccessful_data.push(s)
+      }))
+    })
+
+    await axios.all(rsi_axios_calls)
+    var response = {
+      values: rsi,
+      errors: unsuccessful_data
+    }
+
+    externalData.rsi_data = response
+
+    this.setState(externalData)
   }
 
   render() {
