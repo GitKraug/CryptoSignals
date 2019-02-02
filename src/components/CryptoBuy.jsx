@@ -14,7 +14,8 @@ export default class CryptoBuy extends React.Component {
       all_binance_coins_data: [],
       cmc_data: this.getLogos(),
       filter: 'Velg filter',
-      rsi_data: []
+      rsi_data: [],
+      spinCounter: 0
     };
   }
 
@@ -128,6 +129,7 @@ export default class CryptoBuy extends React.Component {
 
       rsi_axios_calls.push(axios(uri).then(response => {
         rsi.push({symbol: s, rsi: response.data.currentRsi})
+        this.updatePercentageCounter(rsi.length, symbols.length)
       }).catch(e => {
         unsuccessful_data.push(s)
       }))
@@ -144,6 +146,18 @@ export default class CryptoBuy extends React.Component {
     this.setState(externalData)
   }
 
+  updatePercentageCounter(rsiLength, symbolsLength) {
+    var nr = (rsiLength/symbolsLength) * 100;
+
+    this.setState({
+      all_binance_coins_data: this.state.all_binance_coins_data,
+      cmc_data: this.state.cmc_data,
+      filter: this.state.filter,
+      rsi_data: this.state.rsi_data,
+      spinCounter: nr
+    })
+  }
+
   render() {
     var tickers = this.getFilteredList()
       .filter(coin => !(removeCoins.indexOf(coin.symbol) !== -1))
@@ -153,7 +167,7 @@ export default class CryptoBuy extends React.Component {
     return (
       <div className="CryptoBuyContainerColumn">
         {
-          this.isEmptyState() ? <Spinner />  :
+          this.isEmptyState() ? <Spinner percent={this.state.spinCounter} />  :
           <div className="CryptoBuyContainer">
             <Filter handleChange={(option) => this.handleChange(option)} placeholder={this.state.filter} />
             { tickers }
