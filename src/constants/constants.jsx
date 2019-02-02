@@ -13,12 +13,14 @@ export const mostGains = 'mostGains'
 export const lessGains = 'lessGains'
 export const best_RSI = 'best_RSI'
 export const tradeCount = 'tradeCount'
+export const rsi24hr = 'rsi24hr'
 
 export const options = [
   { value: priceChange24Hr, label: 'Største prisendring siste 24 timer' },
   { value: mostGains, label: 'Største prisøkning' },
   { value: lessGains, label: 'Største verditap' },
-  { value: tradeCount, label: 'Tradet mest siste 24hr' }
+  { value: tradeCount, label: 'Tradet mest siste 24hr' },
+  { value: rsi24hr, label: 'Minste RSI (1d)' },
 ]
 
 export const HOME = 'home'
