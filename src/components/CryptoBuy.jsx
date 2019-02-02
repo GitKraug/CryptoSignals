@@ -2,7 +2,7 @@ import React from 'react';
 import './../styles/CryptoBuy.css';
 import axios from 'axios';
 import Ticker from './Ticker';
-import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains, tradeCount} from './../constants/constants.jsx';
+import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains, tradeCount, rsi24hr} from './../constants/constants.jsx';
 import Filter from './Filter.jsx';
 import {CORS_PROXY_URL, BINANCE_TICKERS_24H_URL, CMC_LOGO_URL, CMC_LISTINGS_URL, KRAUG_CRYPTO_API, CURRENT_RSI} from './../constants/url.jsx';
 import Spinner from './Spinner.jsx'
@@ -43,12 +43,19 @@ export default class CryptoBuy extends React.Component {
     return toBeSorted
   }
 
+  filterOn1dRSI() {
+    var toBeSorted = this.state.rsi_data.values.filter(r => (r.rsi > 0))
+    toBeSorted.sort((a, b) => a.rsi - b.rsi)
+    return toBeSorted
+  }
+
   getFilteredList() {
     var mapping = {
       mostGains: this.state.filter === mostGains ? this.filterOnGainsAscending() : this.state.all_binance_coins_data,
       lessGains: this.state.filter === lessGains ? this.filterOnGainsDescending() : this.state.all_binance_coins_data,
       priceChange24Hr: this.state.filter === priceChange24Hr ? this.filterOnMostChangeDescending() : this.state.all_binance_coins_data,
-      tradeCount: this.state.filter === tradeCount ? this.filterOnTradeCount() : this.state.all_binance_coins_data
+      tradeCount: this.state.filter === tradeCount ? this.filterOnTradeCount() : this.state.all_binance_coins_data,
+      rsi24hr: this.state.filter === rsi24hr ? this.filterOn1dRSI() : this.state.all_binance_coins_data
     }
 
     return this.state.filter !== 'Velg filter' && this.state.all_binance_coins_data.length > 0 && mapping[this.state.filter] !== undefined ? mapping[this.state.filter] : this.state.all_binance_coins_data
@@ -140,7 +147,7 @@ export default class CryptoBuy extends React.Component {
   render() {
     var tickers = this.getFilteredList()
       .filter(coin => !(removeCoins.indexOf(coin.symbol) !== -1))
-      .map(t => <Ticker ticker={t.symbol} priceChangePercent={t.priceChangePercent} logoUrl={ this.getLogoUrlFromTicker(this.state.cmc_data, t.symbol) } key={t.symbol} />)
+      .map(t => <Ticker ticker={t.symbol} priceChangePercent={t.priceChangePercent} logoUrl={ this.getLogoUrlFromTicker(this.state.cmc_data, t.symbol) } key={t.symbol} rsi={t.rsi} />)
       .filter(nullfailsafe => nullfailsafe.props.logoUrl !== null)
 
     return (
