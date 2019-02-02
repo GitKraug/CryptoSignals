@@ -5,6 +5,7 @@ import Ticker from './Ticker';
 import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains, tradeCount} from './../constants/constants.jsx';
 import Filter from './Filter.jsx';
 import {CORS_PROXY_URL, BINANCE_TICKERS_24H_URL, CMC_LOGO_URL, CMC_LISTINGS_URL, KRAUG_CRYPTO_API, CURRENT_RSI} from './../constants/url.jsx';
+import Spinner from './Spinner.jsx'
 
 export default class CryptoBuy extends React.Component {
   constructor(props) {
@@ -15,6 +16,10 @@ export default class CryptoBuy extends React.Component {
       filter: 'Velg filter',
       rsi_data: []
     };
+  }
+
+  isEmptyState() {
+    return (this.state.all_binance_coins_data.length === 0) && (this.state.filter ==='Velg filter') && (this.state.rsi_data.length === 0)
   }
 
   filterOnGainsAscending() {
@@ -140,10 +145,13 @@ export default class CryptoBuy extends React.Component {
 
     return (
       <div className="CryptoBuyContainerColumn">
-        <div className="CryptoBuyContainer">
-          <Filter handleChange={(option) => this.handleChange(option)} placeholder={this.state.filter} />
-          { tickers }
-        </div>
+        {
+          this.isEmptyState() ? <Spinner />  :
+          <div className="CryptoBuyContainer">
+            <Filter handleChange={(option) => this.handleChange(option)} placeholder={this.state.filter} />
+            { tickers }
+          </div>
+        }
       </div>
     )
   }
