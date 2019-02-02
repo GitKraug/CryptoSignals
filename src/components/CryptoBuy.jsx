@@ -145,6 +145,7 @@ export default class CryptoBuy extends React.Component {
     }
 
     externalData.rsi_data = response
+    this.props.activateNavigation()
 
     this.setState(externalData)
   }

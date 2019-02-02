@@ -9,19 +9,30 @@ export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: HOME
+      view: HOME,
+      navigationActive: false
     };
   }
 
   changeView(viewName) {
+    if(this.state.navigationActive) {
+      this.setState({
+        view: viewName,
+        navigationActive: this.state.navigationActive
+      })
+    }
+  }
+
+  activateNavigation() {
     this.setState({
-      view: viewName
+      view: this.state.view,
+      navigationActive: true
     })
   }
 
   render() {
     var views = {
-      'home': <CryptoBuy />,
+      'home': <CryptoBuy activateNavigation={() => this.activateNavigation()} />,
       'bitqueen': <TwitterFeed profile={'bitqueenbr'} />,
       'cryptofreak': <TwitterFeed profile={'teddycleps'} />,
       'urbanta': <TwitterFeed profile={'urban_ta'} />,
