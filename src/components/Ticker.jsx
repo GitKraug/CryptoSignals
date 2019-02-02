@@ -7,8 +7,6 @@ export default class Ticker extends React.Component {
   		color: parseFloat(this.props.priceChangePercent) > 0 ? 'green' : 'red'
   	}
 
-    console.log(this.props.logoUrl)
-
     return (
 		<div className="TickerContainer">
 			<img className="TickerLogo" src={this.props.logoUrl} alt='' />

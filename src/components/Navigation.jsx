@@ -28,8 +28,6 @@ export default class Navigation extends React.Component {
       'news': <News />
     }
 
-    console.log("view: " + this.state.view)
-
     return (
       <div className="NavigationContainer">
         <Navbar changeView={(view) => this.changeView(view)} />
