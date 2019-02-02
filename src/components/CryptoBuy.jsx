@@ -91,45 +91,48 @@ export default class CryptoBuy extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(CORS_PROXY_URL + BINANCE_TICKERS_24H_URL).then(response => {
-      this.setState({
+    this.getData()
+  }
+
+  async getData() {
+    var externalData = {}
+
+    await axios.get(CORS_PROXY_URL + BINANCE_TICKERS_24H_URL).then(response => {
+      externalData = {
         all_binance_coins_data: this.filterCoins(response.data),
         cmc_data: this.state.cmc_data,
         filter: 'Velg filter',
         rsi_data: []
-      })
-    }).catch(error => { console.log("Feil ved henting av Binance-ticker") })
-  }
-
-
-async getRsiData(binance_data) {
-      var symbols = binance_data.map(binanceData => binanceData.symbol)
-      var rsi_axios_calls = []
-      var rsi = []
-      var unsuccessful_data = []
-
-      symbols.map(s => {
-        var uri = KRAUG_CRYPTO_API + CURRENT_RSI + '?symbol=' + s + '&interval=1d'
-
-        rsi_axios_calls.push(axios(uri).then(response => {
-          rsi.push({symbol: s, rsi: response.data.currentRsi})
-        }).catch(e => {
-          unsuccessful_data.push(s)
-        }))
-      })
-
-      await axios.all(rsi_axios_calls)
-      var response = {
-        values: rsi,
-        errors: unsuccessful_data
       }
+    }).catch(error => { console.log("Feil ved henting av Binance-tickers") })
 
-      return response
+    var symbols = externalData.all_binance_coins_data.map(binance_data => binance_data.symbol)
+    var rsi_axios_calls = []
+    var rsi = []
+    var unsuccessful_data = []
+
+    symbols.map(s => {
+      var uri = KRAUG_CRYPTO_API + CURRENT_RSI + '?symbol=' + s + '&interval=1d'
+
+      rsi_axios_calls.push(axios(uri).then(response => {
+        rsi.push({symbol: s, rsi: response.data.currentRsi})
+      }).catch(e => {
+        unsuccessful_data.push(s)
+      }))
+    })
+
+    await axios.all(rsi_axios_calls)
+    var response = {
+      values: rsi,
+      errors: unsuccessful_data
+    }
+
+    externalData.rsi_data = response
+
+    this.setState(externalData)
   }
 
   render() {
-    console.log(JSON.stringify(this.state.rsi_data))
-
     var tickers = this.getFilteredList()
       .filter(coin => !(removeCoins.indexOf(coin.symbol) !== -1))
       .map(t => <Ticker ticker={t.symbol} priceChangePercent={t.priceChangePercent} logoUrl={ this.getLogoUrlFromTicker(this.state.cmc_data, t.symbol) } key={t.symbol} />)
