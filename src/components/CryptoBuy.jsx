@@ -67,7 +67,8 @@ export default class CryptoBuy extends React.Component {
       all_binance_coins_data: this.state.all_binance_coins_data,
       cmc_data: this.state.cmc_data,
       filter: selectedOption.value,
-      rsi_data: this.state.rsi_data
+      rsi_data: this.state.rsi_data,
+      spinCounter: this.state.spinCounter
     })
   }
 
@@ -87,7 +88,8 @@ export default class CryptoBuy extends React.Component {
           }
         }),
         filter: this.state.filter,
-        rsi_data: this.state.rsi_data
+        rsi_data: this.state.rsi_data,
+        spinCounter: this.state.spinCounter
       })
     }).catch(error => { console.log("Feil ved henting av CMC-listings") })
   }
@@ -115,7 +117,8 @@ export default class CryptoBuy extends React.Component {
         all_binance_coins_data: this.filterCoins(response.data),
         cmc_data: this.state.cmc_data,
         filter: 'Velg filter',
-        rsi_data: []
+        rsi_data: [],
+        spinCounter: this.state.spinCounter
       }
     }).catch(error => { console.log("Feil ved henting av Binance-tickers") })
 
