@@ -41,7 +41,7 @@ export default class Navigation extends React.Component {
 
   render() {
     var views = {
-      'home': <CryptoBuy activateNavigation={() => this.activateNavigation()} searchBarText={this.state.searchBarText} />,
+      'home': <CryptoBuy activateNavigation={() => this.activateNavigation()} searchBarText={this.state.searchBarText.toUpperCase()} />,
       'bitqueen': <TwitterFeed profile={'bitqueenbr'} />,
       'cryptofreak': <TwitterFeed profile={'teddycleps'} />,
       'urbanta': <TwitterFeed profile={'urban_ta'} />,
