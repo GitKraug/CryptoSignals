@@ -1,17 +1,17 @@
 .CryptoBuyContainer {
 	width: 100%;
 	display: flex;
-  	flex-direction: row;
-  	flex-wrap: wrap;
-  	align-items: center;
-  	justify-content: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
 }
 
 .CryptoBuyContainerColumn {
 	width: 100%;
 	display: flex;
-  	flex-direction: column;
-  	flex-wrap: wrap;
-  	align-items: center;
-  	justify-content: center;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
 }

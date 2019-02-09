@@ -4,7 +4,6 @@ import axios from 'axios';
 import Ticker from './Ticker';
 import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains, tradeCount, rsi24hr, EMPTY_SEARCH_BAR} from './../constants/constants.jsx';
 import Filter from './Filter.jsx';
-import Search from './Search.jsx';
 import {CORS_PROXY_URL, BINANCE_TICKERS_24H_URL, CMC_LOGO_URL, CMC_LISTINGS_URL, KRAUG_CRYPTO_API, CURRENT_RSI} from './../constants/url.jsx';
 import Spinner from './Spinner.jsx'
 
@@ -16,8 +15,7 @@ export default class CryptoBuy extends React.Component {
       cmc_data: this.getLogos(),
       filter: 'Velg filter',
       rsi_data: [],
-      spinCounter: 0,
-      searchBarText: EMPTY_SEARCH_BAR
+      spinCounter: 0
     };
   }
 
@@ -56,7 +54,7 @@ export default class CryptoBuy extends React.Component {
   }
 
   filterOnCoinSearchText(toBeSorted) {
-    return this.state.searchBarText === EMPTY_SEARCH_BAR ? toBeSorted : toBeSorted.filter(coin => coin.symbol.includes(this.state.searchBarText))
+    return this.props.searchBarText === EMPTY_SEARCH_BAR ? toBeSorted : toBeSorted.filter(coin => coin.symbol.includes(this.props.searchBarText))
   }
 
   getFilteredList() {
@@ -71,21 +69,13 @@ export default class CryptoBuy extends React.Component {
     return this.state.filter !== 'Velg filter' && this.state.all_binance_coins_data.length > 0 && mapping[this.state.filter] !== undefined ? mapping[this.state.filter] : this.state.all_binance_coins_data
   }
 
-  updateSearchBarText(value) {
-    var state = this.state
-    state.searchBarText = value
-    console.log(value)
-    this.setState({state})
-  }
-
   handleChange(selectedOption) {
     this.setState({
       all_binance_coins_data: this.state.all_binance_coins_data,
       cmc_data: this.state.cmc_data,
       filter: selectedOption.value,
       rsi_data: this.state.rsi_data,
-      spinCounter: this.state.spinCounter,
-      searchBarText: this.state.searchBarText
+      spinCounter: this.state.spinCounter
     })
   }
 
@@ -106,8 +96,7 @@ export default class CryptoBuy extends React.Component {
         }),
         filter: this.state.filter,
         rsi_data: this.state.rsi_data,
-        spinCounter: this.state.spinCounter,
-        searchBarText: this.state.searchBarText
+        spinCounter: this.state.spinCounter
       })
     }).catch(error => { console.log("Feil ved henting av CMC-listings") })
   }
@@ -176,8 +165,7 @@ export default class CryptoBuy extends React.Component {
       cmc_data: this.state.cmc_data,
       filter: this.state.filter,
       rsi_data: this.state.rsi_data,
-      spinCounter: nr,
-      searchBarText: this.state.searchBarText
+      spinCounter: nr
     })
   }
 
@@ -192,7 +180,6 @@ export default class CryptoBuy extends React.Component {
           this.isEmptyState() ? <Spinner percent={this.state.spinCounter} />  :
           <div className="CryptoBuyContainer">
             <Filter handleChange={(option) => this.handleChange(option)} placeholder={this.state.filter} />
-            <Search onSearchCoinChange={(value) => this.updateSearchBarText(value)}/>
             { tickers }
           </div>
         }
