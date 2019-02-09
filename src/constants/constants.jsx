@@ -28,3 +28,5 @@ export const BITQUEEN = 'bitqueen'
 export const CRYPTOFREAK = 'cryptofreak'
 export const URBANTA = 'urbanta'
 export const INDICATORS = 'indicators'
+
+export const EMPTY_SEARCH_BAR = ''

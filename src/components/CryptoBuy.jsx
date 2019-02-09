@@ -2,7 +2,7 @@ import React from 'react';
 import './../styles/CryptoBuy.css';
 import axios from 'axios';
 import Ticker from './Ticker';
-import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains, tradeCount, rsi24hr} from './../constants/constants.jsx';
+import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains, tradeCount, rsi24hr, EMPTY_SEARCH_BAR} from './../constants/constants.jsx';
 import Filter from './Filter.jsx';
 import {CORS_PROXY_URL, BINANCE_TICKERS_24H_URL, CMC_LOGO_URL, CMC_LISTINGS_URL, KRAUG_CRYPTO_API, CURRENT_RSI} from './../constants/url.jsx';
 import Spinner from './Spinner.jsx'
@@ -25,17 +25,20 @@ export default class CryptoBuy extends React.Component {
 
   filterOnGainsAscending() {
     var toBeSorted = this.state.all_binance_coins_data
-    return toBeSorted.sort((a, b) => parseFloat(a.priceChangePercent) - parseFloat(b.priceChangePercent)).reverse()
+    toBeSorted.sort((a, b) => parseFloat(a.priceChangePercent) - parseFloat(b.priceChangePercent)).reverse()
+    return toBeSorted
   }
 
   filterOnGainsDescending() {
     var toBeSorted = this.state.all_binance_coins_data
-    return toBeSorted.sort((a, b) => parseFloat(a.priceChangePercent) - parseFloat(b.priceChangePercent))
+    toBeSorted.sort((a, b) => parseFloat(a.priceChangePercent) - parseFloat(b.priceChangePercent))
+    return toBeSorted
   }
 
   filterOnMostChangeDescending() {
     var toBeSorted = this.state.all_binance_coins_data
-    return toBeSorted.sort((a, b) => Math.abs(parseFloat(a.priceChangePercent)) - Math.abs(parseFloat(b.priceChangePercent))).reverse()
+    toBeSorted.sort((a, b) => Math.abs(parseFloat(a.priceChangePercent)) - Math.abs(parseFloat(b.priceChangePercent))).reverse()
+    return toBeSorted
   }
 
   filterOnTradeCount() {
@@ -48,6 +51,10 @@ export default class CryptoBuy extends React.Component {
     var toBeSorted = this.state.rsi_data.values.filter(r => (r.rsi > 0))
     toBeSorted.sort((a, b) => a.rsi - b.rsi)
     return toBeSorted
+  }
+
+  filterOnCoinSearchText(toBeSorted) {
+    return this.props.searchBarText === EMPTY_SEARCH_BAR ? toBeSorted : toBeSorted.filter(coin => coin.symbol.includes(this.props.searchBarText))
   }
 
   getFilteredList() {
@@ -163,8 +170,7 @@ export default class CryptoBuy extends React.Component {
   }
 
   render() {
-    var tickers = this.getFilteredList()
-      .filter(coin => !(removeCoins.indexOf(coin.symbol) !== -1))
+    var tickers = this.filterOnCoinSearchText(this.getFilteredList().filter(coin => !(removeCoins.indexOf(coin.symbol) !== -1)))
       .map(t => <Ticker ticker={t.symbol} priceChangePercent={t.priceChangePercent} logoUrl={ this.getLogoUrlFromTicker(this.state.cmc_data, t.symbol) } key={t.symbol} rsi={t.rsi} />)
       .filter(nullfailsafe => nullfailsafe.props.logoUrl !== null)
 
