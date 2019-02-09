@@ -2,8 +2,9 @@ import React from 'react';
 import './../styles/CryptoBuy.css';
 import axios from 'axios';
 import Ticker from './Ticker';
-import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains, tradeCount, rsi24hr} from './../constants/constants.jsx';
+import {convertCoins, removeCoins, priceChange24Hr, mostGains, lessGains, tradeCount, rsi24hr, EMPTY_SEARCH_BAR} from './../constants/constants.jsx';
 import Filter from './Filter.jsx';
+import Search from './Search.jsx';
 import {CORS_PROXY_URL, BINANCE_TICKERS_24H_URL, CMC_LOGO_URL, CMC_LISTINGS_URL, KRAUG_CRYPTO_API, CURRENT_RSI} from './../constants/url.jsx';
 import Spinner from './Spinner.jsx'
 
@@ -15,7 +16,8 @@ export default class CryptoBuy extends React.Component {
       cmc_data: this.getLogos(),
       filter: 'Velg filter',
       rsi_data: [],
-      spinCounter: 0
+      spinCounter: 0,
+      searchBarText: EMPTY_SEARCH_BAR
     };
   }
 
@@ -25,17 +27,20 @@ export default class CryptoBuy extends React.Component {
 
   filterOnGainsAscending() {
     var toBeSorted = this.state.all_binance_coins_data
-    return toBeSorted.sort((a, b) => parseFloat(a.priceChangePercent) - parseFloat(b.priceChangePercent)).reverse()
+    toBeSorted.sort((a, b) => parseFloat(a.priceChangePercent) - parseFloat(b.priceChangePercent)).reverse()
+    return toBeSorted
   }
 
   filterOnGainsDescending() {
     var toBeSorted = this.state.all_binance_coins_data
-    return toBeSorted.sort((a, b) => parseFloat(a.priceChangePercent) - parseFloat(b.priceChangePercent))
+    toBeSorted.sort((a, b) => parseFloat(a.priceChangePercent) - parseFloat(b.priceChangePercent))
+    return toBeSorted
   }
 
   filterOnMostChangeDescending() {
     var toBeSorted = this.state.all_binance_coins_data
-    return toBeSorted.sort((a, b) => Math.abs(parseFloat(a.priceChangePercent)) - Math.abs(parseFloat(b.priceChangePercent))).reverse()
+    toBeSorted.sort((a, b) => Math.abs(parseFloat(a.priceChangePercent)) - Math.abs(parseFloat(b.priceChangePercent))).reverse()
+    return toBeSorted
   }
 
   filterOnTradeCount() {
@@ -50,6 +55,10 @@ export default class CryptoBuy extends React.Component {
     return toBeSorted
   }
 
+  filterOnCoinSearchText(toBeSorted) {
+    return this.state.searchBarText === EMPTY_SEARCH_BAR ? toBeSorted : toBeSorted.filter(coin => coin.symbol.includes(this.state.searchBarText))
+  }
+
   getFilteredList() {
     var mapping = {
       mostGains: this.state.filter === mostGains ? this.filterOnGainsAscending() : this.state.all_binance_coins_data,
@@ -62,13 +71,21 @@ export default class CryptoBuy extends React.Component {
     return this.state.filter !== 'Velg filter' && this.state.all_binance_coins_data.length > 0 && mapping[this.state.filter] !== undefined ? mapping[this.state.filter] : this.state.all_binance_coins_data
   }
 
+  updateSearchBarText(value) {
+    var state = this.state
+    state.searchBarText = value
+    console.log(value)
+    this.setState({state})
+  }
+
   handleChange(selectedOption) {
     this.setState({
       all_binance_coins_data: this.state.all_binance_coins_data,
       cmc_data: this.state.cmc_data,
       filter: selectedOption.value,
       rsi_data: this.state.rsi_data,
-      spinCounter: this.state.spinCounter
+      spinCounter: this.state.spinCounter,
+      searchBarText: this.state.searchBarText
     })
   }
 
@@ -89,7 +106,8 @@ export default class CryptoBuy extends React.Component {
         }),
         filter: this.state.filter,
         rsi_data: this.state.rsi_data,
-        spinCounter: this.state.spinCounter
+        spinCounter: this.state.spinCounter,
+        searchBarText: this.state.searchBarText
       })
     }).catch(error => { console.log("Feil ved henting av CMC-listings") })
   }
@@ -158,13 +176,13 @@ export default class CryptoBuy extends React.Component {
       cmc_data: this.state.cmc_data,
       filter: this.state.filter,
       rsi_data: this.state.rsi_data,
-      spinCounter: nr
+      spinCounter: nr,
+      searchBarText: this.state.searchBarText
     })
   }
 
   render() {
-    var tickers = this.getFilteredList()
-      .filter(coin => !(removeCoins.indexOf(coin.symbol) !== -1))
+    var tickers = this.filterOnCoinSearchText(this.getFilteredList().filter(coin => !(removeCoins.indexOf(coin.symbol) !== -1)))
       .map(t => <Ticker ticker={t.symbol} priceChangePercent={t.priceChangePercent} logoUrl={ this.getLogoUrlFromTicker(this.state.cmc_data, t.symbol) } key={t.symbol} rsi={t.rsi} />)
       .filter(nullfailsafe => nullfailsafe.props.logoUrl !== null)
 
@@ -174,6 +192,7 @@ export default class CryptoBuy extends React.Component {
           this.isEmptyState() ? <Spinner percent={this.state.spinCounter} />  :
           <div className="CryptoBuyContainer">
             <Filter handleChange={(option) => this.handleChange(option)} placeholder={this.state.filter} />
+            <Search onSearchCoinChange={(value) => this.updateSearchBarText(value)}/>
             { tickers }
           </div>
         }
