@@ -9,7 +9,7 @@ export default class Filter extends React.Component {
       <div className="FilterContainer">
         <div className="SelectContainer">
           <p className="FilterChosen">Søkekriterier</p>
-          <Select onChange={this.props.handleChange} options={options} placeholder={this.props.filter} className={"SelectContainer"} />
+          <Select onChange={this.props.handleChange} options={options} placeholder={this.props.filter} />
         </div>
       </div>
     )
