@@ -45,7 +45,7 @@ export default class Navigation extends React.Component {
       'bitqueen': <TwitterFeed profile={'bitqueenbr'} />,
       'cryptofreak': <TwitterFeed profile={'teddycleps'} />,
       'urbanta': <TwitterFeed profile={'urban_ta'} />,
-      'indicators': <Indicators indicatorQuery={this.state.searchBarText} />
+      'indicators': <Indicators indicatorQuery={this.state.searchBarText.toUpperCase()} />
     }
 
     return (
