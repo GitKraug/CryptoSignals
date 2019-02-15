@@ -21,12 +21,13 @@ export default class Navbar extends React.Component {
   render() {
     return (
       <div className="NavbarContainer">
-        <p className="NavbarItem" onClick={(view) => this.handleClick(HOME)} >Oversikt</p>
-        <p className="NavbarItem" onClick={(view) => this.handleClick(BITQUEEN)} >BitqueenBR</p>
-        <p className="NavbarItem" onClick={(view) => this.handleClick(URBANTA)} >UrbanTA</p>
-        <p className="NavbarItem" onClick={(view) => this.handleClick(CRYPTOFREAK)} >CrypoFreak</p>
-        <p className="NavbarItem" onClick={(view) => this.handleClick(INDICATORS)} >Indicators</p>
-
+        <div className="LeftNavBarItemsContainer">
+          <p className="NavbarItem" onClick={(view) => this.handleClick(HOME)} >Oversikt</p>
+          <p className="NavbarItem" onClick={(view) => this.handleClick(BITQUEEN)} >BitqueenBR</p>
+          <p className="NavbarItem" onClick={(view) => this.handleClick(URBANTA)} >UrbanTA</p>
+          <p className="NavbarItem" onClick={(view) => this.handleClick(CRYPTOFREAK)} >CrypoFreak</p>
+          <p className="NavbarItem" onClick={(view) => this.handleClick(INDICATORS)} >Indicators</p>
+        </div>
         <div className="SearchFieldContainer">
           <SearchField placeholder='Search coin...' onChange={this.onSearchBarChange} />
         </div>

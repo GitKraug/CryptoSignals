@@ -5,10 +5,18 @@
 	display:flex;
 	flex-direction: row;
 	align-items: center;
+}
+
+.LeftNavBarItemsContainer {
+	width: 75%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 	justify-content: space-around;
 }
 
 .NavbarItem {
+	display: flex;
 	font-family: "Arial";
 	font-size: 1.4em;
 	color: white;
@@ -21,6 +29,7 @@
 
 .SearchFieldContainer {
 	width: 10%;
+	display:flex;
 	align: right;
 }
 
