@@ -27,9 +27,9 @@ export default class Navbar extends React.Component {
         <div className="LeftNavBarItemsContainer">
 
           <div className="NavbarItem">
-            <Dropdown text="Oversikt">
-              <Dropdown.Menu>
-                <Dropdown.Item text='Home' />
+            <Dropdown text="Oversikt" >
+              <Dropdown.Menu style={{marginTop:'7%'}}>
+                <Dropdown.Item text='Home' onClick={(view) => this.handleClick(HOME)} />
                 <Dropdown.Item text='Statistikk' />
                 <Dropdown.Item text='Prisforskjell' />
                 <Dropdown.Item text='Coinheat'/>
@@ -39,7 +39,7 @@ export default class Navbar extends React.Component {
 
           <div className="NavbarItem">
             <Dropdown text="Tweets" >
-              <Dropdown.Menu>
+              <Dropdown.Menu style={{marginTop:'7%'}}>
                 <Dropdown.Item text='BitqueenBR' onClick={(view) => this.handleClick(BITQUEEN)} />
                 <Dropdown.Item text='UrbanTa' onClick={(view) => this.handleClick(URBANTA)} />
                 <Dropdown.Item text='CryptoFreak' onClick={(view) => this.handleClick(CRYPTOFREAK)}/>
