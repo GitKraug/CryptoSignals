@@ -1,6 +1,6 @@
 import React from 'react';
 import './../styles/Navbar.css';
-import {HOME, BITQUEEN, CRYPTOFREAK, URBANTA, INDICATORS} from './../constants/constants.jsx';
+import {HOME, BITQUEEN, CRYPTOFREAK, URBANTA, INDICATORS, PRISFORSKJELL} from './../constants/constants.jsx';
 import SearchField from 'react-search-field';
 import { Dropdown } from 'semantic-ui-react'
 
@@ -31,7 +31,7 @@ export default class Navbar extends React.Component {
               <Dropdown.Menu style={{marginTop:'7%'}}>
                 <Dropdown.Item text='Home' onClick={(view) => this.handleClick(HOME)} />
                 <Dropdown.Item text='Statistikk' />
-                <Dropdown.Item text='Prisforskjell' />
+                <Dropdown.Item text='Prisforskjell' onClick={(view) => this.handleClick(PRISFORSKJELL)}/>
                 <Dropdown.Item text='Coinheat'/>
               </Dropdown.Menu>
             </Dropdown>

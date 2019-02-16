@@ -4,3 +4,4 @@ export const BINANCE_TICKERS_24H_URL = 'https://api.binance.com/api/v1/ticker/24
 export const CORS_PROXY_URL = 'https://cors-anywhere.herokuapp.com/'
 export const KRAUG_CRYPTO_API = 'http://localhost:8080/crypto/api/'
 export const CURRENT_RSI = 'rsi/now'
+export const PRISFORSKJELL = 'http://localhost:8080/crypto/api/tickers/compare?min=0&max=50'

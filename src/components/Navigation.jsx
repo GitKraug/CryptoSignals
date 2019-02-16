@@ -4,6 +4,7 @@ import TwitterFeed from './TwitterFeed.jsx';
 import {HOME, EMPTY_SEARCH_BAR} from './../constants/constants.jsx';
 import Navbar from './Navbar.jsx';
 import Indicators from './Indicators.jsx';
+import Prisforskjell from './PrisForskjell.jsx';
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -45,7 +46,8 @@ export default class Navigation extends React.Component {
       'bitqueen': <TwitterFeed profile={'bitqueenbr'} />,
       'cryptofreak': <TwitterFeed profile={'teddycleps'} />,
       'urbanta': <TwitterFeed profile={'urban_ta'} />,
-      'indicators': <Indicators indicatorQuery={this.state.searchBarText.toUpperCase()} />
+      'indicators': <Indicators indicatorQuery={this.state.searchBarText.toUpperCase()} />,
+      'prisforskjell': <Prisforskjell />
     }
 
     return (
