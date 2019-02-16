@@ -12,6 +12,7 @@ export default class Indicators extends React.Component {
   render() {
     return (
       <div className="IndicatorsContainer">
+        <p className="IndicatorCurrency">{this.toIndicatorQuery()}</p>
         <TradingViewWidget symbol={"BINANCE:" + this.toIndicatorQuery()} />
       </div>
     )
