@@ -119,9 +119,9 @@ export default class CryptoBuy extends React.Component {
   async getData() {
     var externalData = {}
 
-    await axios.get(CORS_PROXY_URL + BINANCE_TICKERS_24H_URL).then(response => {
+    await axios.get(BINANCE_TICKERS_24H_URL).then(response => {
       externalData = {
-        all_binance_coins_data: this.filterCoins(response.data),
+        all_binance_coins_data: this.filterCoins(response.data.tickerDtos),
         cmc_data: this.state.cmc_data,
         filter: 'Velg filter',
         rsi_data: [],

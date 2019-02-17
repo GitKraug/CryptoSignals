@@ -3,6 +3,7 @@ import './../styles/Prisforskjell.css';
 import axios from 'axios';
 import {PRISFORSKJELL} from './../constants/url.jsx';
 import Loader from 'react-loader-spinner';
+import PrisforskjellSegment from './PrisforskjellSegment.jsx';
 
 export default class Prisforskjell extends React.Component {
   constructor(props) {
@@ -33,9 +34,10 @@ export default class Prisforskjell extends React.Component {
     return (
       <div className="PrisforskjellContainer">
         {
-          this.state.externalCallsFinished ? <p>{JSON.stringify(this.state.prisforskjell)}</p> :
+          this.state.externalCallsFinished ? <p className="ForskjellHeading">Forskjeller i pris</p> :
           <Loader type="Oval" color="green" height={200} width={200} />
         }
+        <PrisforskjellSegment data={this.state.prisforskjell} />
       </div>
     )
   }
