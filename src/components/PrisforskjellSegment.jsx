@@ -48,6 +48,17 @@ export default class PrisforskjellSegment extends React.Component {
     } else return ticker.ask
   }
 
+  calculateReturn(amountTraded, exchangeInfo, symbol) {
+    var minAsk = exchangeInfo.filter(c => c.action === "BUY")[0].ask
+    var maxBid = exchangeInfo.filter(c => c.action === "SELL")[0].bid
+    return (amountTraded/minAsk) * (maxBid - minAsk)
+  }
+
+  concatWithLogoUrls() {
+    var logos = this.props.logoUrls
+    console.log(JSON.stringify(logos))
+  }
+
   render() {
     return (
       <div className="PrisforskjellSegmentContainer">
@@ -68,6 +79,7 @@ export default class PrisforskjellSegment extends React.Component {
                       <div className="PrisinfoContainer">
                         {
                           priser.exchangeInfo.map((info, index) => {
+
                             var action = info.action!=="NONE" ? info.action : null
 
                             return (
